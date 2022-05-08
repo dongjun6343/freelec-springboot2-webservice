@@ -13,6 +13,17 @@ repositories {
 }
 
 dependencies {
-    implementation ('org.springframework.boot:spring-boot-starter-web')
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+// 롬복 : Getter , Setter , 기본생성자, toString 등 어노테이션으로 자동 생성해준다.
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+//    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //JUnit4 추가
+    testImplementation("org.junit.vintage:junit-vintage-engine") {
+        exclude group: "org.hamcrest", module: "hamcrest-core"
+    }
 }
