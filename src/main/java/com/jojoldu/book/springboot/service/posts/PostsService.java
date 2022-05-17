@@ -3,12 +3,16 @@ package com.jojoldu.book.springboot.service.posts;
 
 import com.jojoldu.book.springboot.domain.posts.Posts;
 import com.jojoldu.book.springboot.domain.posts.PostsRepository;
+import com.jojoldu.book.springboot.web.dto.PostsListResponseDto;
 import com.jojoldu.book.springboot.web.dto.PostsResponseDto;
 import com.jojoldu.book.springboot.web.dto.PostsSaveRequestDto;
 import com.jojoldu.book.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * update : JPA는 영속성 컨텍스트가 있다.
@@ -40,5 +44,28 @@ public class PostsService {
         Posts entity = postsRepository.findById(id).orElseThrow(()-> new
                 IllegalArgumentException("해당 게시글이 없습니다. id = " + id));
         return new PostsResponseDto(entity);
+    }
+
+
+    /**
+     * postRepository에서 넘어온 결과를
+     * Stream을 통해 map으로 new PostsListResponseDto 에 매핑 해준다.
+     * 1) postsRepository.findAllDesc().stream()
+     *
+     * PostsListResponseDto에서는 파라미터로 postRepository에서 넘어온 결과 Posts entity를 받고 있으므로
+     * .map(entity -> new PostsListResponseDto(entity)) ==> .map(PostsListResponseDto::new)
+     *
+     * collect를 사용해서 List로 변환한다.
+     * .collect(Collectors.toList());
+     * @return
+     */
+
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc(){
+        return postsRepository.findAllDESC().stream()
+                .map(PostsListResponseDto::new).collect(Collectors.toList());
+//      return postsRepository.findAllDESC().stream().map(entity -> new PostsListResponseDto(entity)).
+//               collect(Collectors.toList());
+
     }
 }

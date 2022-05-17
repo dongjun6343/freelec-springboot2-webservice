@@ -74,6 +74,11 @@ public class Posts extends BaseTimeEntity {
         this.author = author;
     }
 
+    /**
+     * update 메소드만 왜 Posts에 따로 만드는가?
+     * 객체지향 프로그래밍에서 클래스의 상태를 변경하는 것은 자기 자신이 해야할 일이라고 나와있다.
+     * 그렇기 때문에 update메서드가 Posts 도메인 안에 있는 것!
+      */
     public void update(String title, String content){
         this.title = title;
         this.content = content;
