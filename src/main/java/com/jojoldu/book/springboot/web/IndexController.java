@@ -1,7 +1,7 @@
 package com.jojoldu.book.springboot.web;
 
+import com.jojoldu.book.springboot.config.auth.LoginUser;
 import com.jojoldu.book.springboot.config.auth.dto.SessionUser;
-import com.jojoldu.book.springboot.domain.posts.PostsRepository;
 import com.jojoldu.book.springboot.service.posts.PostsService;
 import com.jojoldu.book.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,15 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, @LoginUser SessionUser user){
 
         // postsService.findAllDesc()에서 가져온 값을 posts로 전달.
         model.addAttribute("posts", postsService.findAllDesc());
 
         // 로그인 성공 시 httpSession.getAttribute("user") 의 값을 가져온다.
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        // SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        // ==> @LoginUser로 소스 개선.(0527)
+
 
         // 세션에 저장된 값이 있을 때만 model에 userName으로 등록.
         if (user != null){
