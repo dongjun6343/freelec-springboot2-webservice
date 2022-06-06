@@ -10,7 +10,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  *     SpringApplication.run : 내장 WAS 실행. (내장 WAS - 외부에 WAS를 두지 않고 애플리케이션을 실행할 때 내부 WAS를 실행한다.)
  *     스프링부트에서는 내장 WAS 사용을 권장함. Why? 언제 어디서나 같은 환경에서 스프링 부트를 배포할 수 있기 때문에.
  */
-@EnableJpaAuditing // JPA Auditing 활성화
+// JPA Auditing 활성화
+// @EnableJpaAuditing
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {
